@@ -1,0 +1,114 @@
+openapi: 3.0.0
+info:
+  title: Wunschzettel API
+  version: 1.0.0
+  description: API zur Verwaltung von Wunschzetteln
+
+servers:
+  - url: http://localhost:8080
+    description: Lokale Entwicklungsumgebung
+
+paths:
+  /wishlist:
+    post:
+      summary: Neuen Wunsch anlegen
+      operationId: createWish
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WishInput"
+      responses:
+        "201":
+          description: Wunsch erfolgreich angelegt
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Wish"
+        "400":
+          description: Ungültige Eingabe (z. B. fehlende Werte)
+        "500":
+          description: Interner Serverfehler
+
+    get:
+      summary: Alle Wünsche abrufen
+      operationId: getAllWishes
+      responses:
+        "200":
+          description: Liste aller Wünsche
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Wish"
+        "500":
+          description: Interner Serverfehler
+
+  /wishlist/{id}:
+    get:
+      summary: Spezifischen Wunsch abrufen
+      operationId: getWishById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Wunsch gefunden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Wish"
+        "404":
+          description: Wunsch nicht gefunden
+        "500":
+          description: Interner Serverfehler
+
+    delete:
+      summary: Wunsch löschen
+      operationId: deleteWish
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Wunsch erfolgreich gelöscht
+        "404":
+          description: Wunsch nicht gefunden
+        "500":
+          description: Interner Serverfehler
+
+components:
+  schemas:
+    Wish:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        kid:
+          type: string
+          example: "Lisa"
+        wish:
+          type: string
+          example: "Lego Set"
+
+    WishInput:
+      type: object
+      properties:
+        kid:
+          type: string
+          example: "Lisa"
+        wish:
+          type: string
+          example: "Lego Set"
