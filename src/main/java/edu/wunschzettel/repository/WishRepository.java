@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface WishRepository extends JpaRepository<Wish, UUID> {
-    Optional<Wish> findByKid(String kid);
+    Optional<Wish> findByOwner(String owner);
 }

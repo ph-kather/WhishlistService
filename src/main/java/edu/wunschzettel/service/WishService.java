@@ -23,10 +23,11 @@ public class WishService {
         return wishRepository.findById(id);
     }
 
-    public Wish createWish(String kid, String wish) {
+    public Wish createWish(String owner, String wish, int age) {
         Wish newWish = Wish.builder()
-            .kid(kid)
+            .owner(owner)
             .wish(wish)
+            .age(age)
             .build();
         return wishRepository.save(newWish);
     }

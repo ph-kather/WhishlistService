@@ -19,8 +19,11 @@ public class Wish {
     private UUID id;
 
     @Column(nullable = false)
-    private String kid;
+    private String owner;
 
     @Column(nullable = false)
     private String wish;
+
+    @Column(nullable = false)
+    private int age;
 }

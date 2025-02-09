@@ -9,7 +9,7 @@ servers:
     description: Lokale Entwicklungsumgebung
 
 paths:
-  /wishlist:
+  /wish:
     post:
       summary: Neuen Wunsch anlegen
       operationId: createWish
@@ -46,7 +46,7 @@ paths:
         "500":
           description: Interner Serverfehler
 
-  /wishlist/{id}:
+  /wish/{id}:
     get:
       summary: Spezifischen Wunsch abrufen
       operationId: getWishById
@@ -96,9 +96,12 @@ components:
           type: string
           format: uuid
           example: "550e8400-e29b-41d4-a716-446655440000"
-        kid:
+        owner:
           type: string
           example: "Lisa"
+        age:
+          type: integer
+          example: 8
         wish:
           type: string
           example: "Lego Set"
@@ -106,9 +109,12 @@ components:
     WishInput:
       type: object
       properties:
-        kid:
+        owner:
           type: string
           example: "Lisa"
+        age:
+          type: integer
+          example: 8
         wish:
           type: string
           example: "Lego Set"

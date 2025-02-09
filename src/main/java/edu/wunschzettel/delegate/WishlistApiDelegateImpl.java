@@ -1,6 +1,6 @@
 package edu.wunschzettel.delegate;
 
-import edu.wunschzettel.api.WishlistApiDelegate;
+import edu.wunschzettel.api.WishApiDelegate;
 import edu.wunschzettel.model.WishDto;
 import edu.wunschzettel.model.WishInputDto;
 import edu.wunschzettel.service.WishService;
@@ -18,13 +18,13 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
-public class WishlistApiDelegateImpl implements WishlistApiDelegate {
+public class WishlistApiDelegateImpl implements WishApiDelegate {
 
     private final WishService wishService;
 
     @Override
     public ResponseEntity<WishDto> createWish(WishInputDto wishInputDto) {
-        var createdWish = wishService.createWish(wishInputDto.getKid(), wishInputDto.getWish());
+        var createdWish = wishService.createWish(wishInputDto.getOwner(), wishInputDto.getWish(), wishInputDto.getAge());
         return ResponseEntity.status(201).body(mapToWishDto(createdWish));
     }
 
@@ -61,7 +61,8 @@ public class WishlistApiDelegateImpl implements WishlistApiDelegate {
     private WishDto mapToWishDto(edu.wunschzettel.model.Wish wish) {
         return new WishDto()
             .id(wish.getId())
-            .kid(wish.getKid())
+            .owner(wish.getOwner())
+            .age(wish.getAge())
             .wish(wish.getWish());
     }
 }
